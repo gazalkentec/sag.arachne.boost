@@ -8,7 +8,7 @@
 #pragma comment (lib, "tinyxml/tinyxml.lib")
 
 struct LoggerParameters {
-	framework::Diagnostics::LogLevel LogLevel = framework::Diagnostics::LogLevel::Info;
+	//framework::Diagnostics::LogLevel LogLevel = framework::Diagnostics::LogLevel::Info;
 	const std::string LogFileExtention = ".log";
 	std::string LogName;
 	std::string LogFilePath;
@@ -67,7 +67,7 @@ public:
 
 	std::string LogName() { return _logger.LogName; };
 	std::string LogFile() { return _logger.LogFilePath + _logger.LogFileName; };
-	framework::Diagnostics::LogLevel LogLevel() { return _logger.LogLevel; };
+//	framework::Diagnostics::LogLevel LogLevel() { return _logger.LogLevel; };
 
 
 	Configurator()
@@ -138,7 +138,7 @@ public:
 									}
 									else _logger.LogFilePath = _path;
 
-									_logger.LogLevel = static_cast<framework::Diagnostics::LogLevel>(atoi(logger->Attribute("level")));
+									//_logger.LogLevel = static_cast<framework::Diagnostics::LogLevel>(atoi(logger->Attribute("level")));
 
 									TiXmlElement *plc = service->FirstChildElement("plc");
 									if (plc)

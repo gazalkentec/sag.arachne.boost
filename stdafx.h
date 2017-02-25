@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <fstream>
 
-#include "logger/Logger.h"
 #include "sqlite/sqlite3.h"
 
 enum DB_TYPES {
