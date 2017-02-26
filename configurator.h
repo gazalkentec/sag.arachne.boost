@@ -58,17 +58,9 @@ public:
 	bool IsLoaded() { return _is_loaded; };
 	std::string ServicePath() { return _path; };
 	std::string ServiceName() { return _service_name; }
-	LPCTSTR ServiceName_LPCTSTR()
-	{
-		CA2T buff(_service_name.c_str());
-		LPCTSTR result = buff;
-		return result;
-	}
 
 	std::string LogName() { return _logger.LogName; };
 	std::string LogFile() { return _logger.LogFilePath + _logger.LogFileName; };
-//	framework::Diagnostics::LogLevel LogLevel() { return _logger.LogLevel; };
-
 
 	Configurator()
 	{
