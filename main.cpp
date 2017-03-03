@@ -244,8 +244,10 @@ DWORD WINAPI ServiceWorkerThread(LPVOID lpParam)
 	//  Periodically check if the service has been requested to stop
 	while (WaitForSingleObject(g_ServiceStopEvent, 0) != WAIT_OBJECT_0)
 	{
-		//  Simulate some work by sleeping
-		Sleep(550);
+
+		_INFO << "main worker is working...";
+
+		Sleep(50);
 	}
 
 	_INFO << "main worker exit...";
@@ -262,8 +264,9 @@ DWORD WINAPI PLCExchangeWorker(LPVOID lpParam)
 	while (WaitForSingleObject(g_ServiceStopEvent, 0) != WAIT_OBJECT_0)
 	{
 
-		//  Simulate some work by sleeping
-		Sleep(200);
+		_INFO << "PLC exchanger is working...";
+
+		Sleep(config.PLCPollPeriodMSec());
 	}
 
 	_INFO << "PLC exchange worker exit...";
@@ -279,8 +282,9 @@ DWORD WINAPI MAINDBExchangeWorker(LPVOID lpParam)
 	while (WaitForSingleObject(g_ServiceStopEvent, 0) != WAIT_OBJECT_0)
 	{
 
-		//  Simulate some work by sleeping
-		Sleep(1000);
+		_INFO << "MainDB exchanger is working...";
+
+		Sleep(config.MainDBPollPeriodMSec());
 	}
 
 	_INFO << "MainDB worker exit...";

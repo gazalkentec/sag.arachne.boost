@@ -127,10 +127,21 @@ BOOST_LOG_GLOBAL_LOGGER_INIT(my_logger, logger_t)
 	boost::shared_ptr<sinks::text_file_backend> file_backend = boost::make_shared<sinks::text_file_backend>
 		(
 			keywords::file_name = filename,
-			keywords::rotation_size = 5 * 1024 * 1024,
+			keywords::open_mode = (std::ios::out | std::ios::app),
+			keywords::rotation_size = config.RotateSizeMB() * 1024 * 1024,
 			keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
 			keywords::auto_flush = true
 			);
+
+	file_backend->set_file_collector(sinks::file::make_collector
+		(
+			keywords::target = config.ArchivePath(),
+			keywords::max_size = config.ArchiveSizeMB() * 1024 * 1024,
+			keywords::min_free_space = config.MinDriveFreeSpace() * 1024 * 1024
+		));
+
+	file_backend->scan_for_files(sinks::file::scan_all);
+
 
 	typedef sinks::synchronous_sink<sinks::text_file_backend> file_text_sink_t;
 	boost::shared_ptr<file_text_sink_t> file_sink = boost::make_shared<file_text_sink_t>(file_backend);

@@ -8,11 +8,14 @@
 #pragma comment (lib, "tinyxml/tinyxml.lib")
 
 struct LoggerParameters {
-	//framework::Diagnostics::LogLevel LogLevel = framework::Diagnostics::LogLevel::Info;
-	const std::string LogFileExtention = ".log";
+	std::string LogFileExtention = "_%3N.log";
 	std::string LogName;
 	std::string LogFilePath;
+	std::string ArchivePath;
 	std::string LogFileName;
+	int LogRotateSizeMB = 5;
+	int ArchiveSizeMB = 50;
+	int MinDriveFreeSpace = 100;
 };
 
 struct PLCParameters {
@@ -55,12 +58,27 @@ private:
 
 public:
 
+	/* CONFIG */
 	bool IsLoaded() { return _is_loaded; };
+
+	/* SERVICE */
 	std::string ServicePath() { return _path; };
 	std::string ServiceName() { return _service_name; }
 
+	/* LOGGER */
 	std::string LogName() { return _logger.LogName; };
 	std::string LogFile() { return _logger.LogFilePath + _logger.LogFileName; };
+	std::string ArchivePath() { return _logger.ArchivePath; };
+
+	int RotateSizeMB() { return _logger.LogRotateSizeMB; };
+	int ArchiveSizeMB() { return _logger.ArchiveSizeMB; };
+	int MinDriveFreeSpace() { return _logger.MinDriveFreeSpace; };
+
+	/* PLC */
+	int PLCPollPeriodMSec() { return _plc.PLCPollPeriodMSec; };
+
+	/* MAINDB */
+	int MainDBPollPeriodMSec() { return _maindb.MainDBPollPeriodMSec; };
 
 	Configurator()
 	{
@@ -114,6 +132,8 @@ public:
 								{
 									_logger.LogName = _service_name;
 
+									_logger.LogFileExtention = logger->Attribute("file_extension_pattern");
+
 									std::string buff = logger->Attribute("alter_file_name");
 									if (!buff.empty()) {
 										_logger.LogFileName = buff;
@@ -130,7 +150,11 @@ public:
 									}
 									else _logger.LogFilePath = _path;
 
-									//_logger.LogLevel = static_cast<framework::Diagnostics::LogLevel>(atoi(logger->Attribute("level")));
+									_logger.LogRotateSizeMB = atoi(logger->Attribute("file_size_mb"));
+									_logger.LogRotateSizeMB = atoi(logger->Attribute("archive_size_mb")); 
+									_logger.LogRotateSizeMB = atoi(logger->Attribute("min_drive_free_space_mb"));
+
+									_logger.ArchivePath = logger->Attribute("archive_path");
 
 									TiXmlElement *plc = service->FirstChildElement("plc");
 									if (plc)
