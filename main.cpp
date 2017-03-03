@@ -237,10 +237,8 @@ DWORD WINAPI ServiceWorkerThread(LPVOID lpParam)
 
 	// Start the thread that will perform the main task of the service
 	CreateThread(NULL, 0, MAINDBExchangeWorker, NULL, 0, NULL);
-	Sleep(300);
 	// Start the thread that will perform the main task of the service
 	CreateThread(NULL, 0, PLCExchangeWorker, NULL, 0, NULL);
-	Sleep(300);
 	//  Periodically check if the service has been requested to stop
 	while (WaitForSingleObject(g_ServiceStopEvent, 0) != WAIT_OBJECT_0)
 	{

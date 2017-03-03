@@ -151,8 +151,8 @@ public:
 									else _logger.LogFilePath = _path;
 
 									_logger.LogRotateSizeMB = atoi(logger->Attribute("file_size_mb"));
-									_logger.LogRotateSizeMB = atoi(logger->Attribute("archive_size_mb")); 
-									_logger.LogRotateSizeMB = atoi(logger->Attribute("min_drive_free_space_mb"));
+									_logger.ArchiveSizeMB = atoi(logger->Attribute("archive_size_mb")); 
+									_logger.MinDriveFreeSpace = atoi(logger->Attribute("min_drive_free_space_mb"));
 
 									_logger.ArchivePath = logger->Attribute("archive_path");
 
@@ -160,7 +160,7 @@ public:
 									if (plc)
 									{
 										_plc.PLCType = static_cast<PLC_TYPES>(atoi(plc->Attribute("type")));
-										_plc.PLCPollPeriodMSec = atoi(plc->Attribute("poll_period_msecv"));
+										_plc.PLCPollPeriodMSec = atoi(plc->Attribute("poll_period_msec"));
 										_plc.PLCPortNumber = atoi(plc->Attribute("port"));
 										_plc.PLCIPAddress = plc->Attribute("ip_address");
 
