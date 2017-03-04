@@ -2,14 +2,6 @@
 
 #pragma comment (lib, "libnodave/libnodave.lib")
 
-#include <vector>
-#include <string>
-#include <memory>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <iomanip>
-#include <cstdlib>
 #include <fstream>
 
 #include "sqlite/sqlite3.h"
